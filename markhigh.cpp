@@ -304,6 +304,14 @@ std::string Word_map::searchword(std::string characters) {//16???????
       if (calcscore(highest) < calcscore(comp)) {
         highest = v->at(i);
       }
+      else if (calcscore(highest) == calcscore(comp)) {
+        if (highest.length() < comp.length()) {
+          highest = v->at(i);
+        }
+      }
+      else{
+
+      }
       //stock.push_back(v->at(i));
     }
   }
@@ -319,6 +327,14 @@ std::string Word_map::searchword2(std::string characters){
     comp = searchword(comb[i]);
     if (calcscore(highest) < calcscore(comp)) {
       highest = comp;
+    }
+    else if (calcscore(highest) == calcscore(comp)) {
+      if (highest.length() < comp.length()) {
+        highest = comp;
+      }
+    }
+    else{
+
     }
   }
   std::cout << "finish" << '\n';
