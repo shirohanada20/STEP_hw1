@@ -10,7 +10,7 @@ private:
   static int h2;
 public:
   std::vector<std::string> words;
-  std::unordered_map<char, Word_block*> next;
+  std::unordered_map<char, Word_block*>* next;
   void release();
   //~Word_block();
 
@@ -117,7 +117,7 @@ int calcscore(std::string word){
       break;
       case 'K': score += 3;
       break;
-      case 'Q': score += 3;
+      case 'Q': score += 2;
       break;
       case 'X': score += 3;
       break;
@@ -178,6 +178,18 @@ class Word_map {
           dictionary.at(char(i)) -> unordered_map::emplace(char(j), new Word_block);
         }
       }
+      for (int i = 65; i < 91; i++) {
+        for (int j = 65; j < 91; j++) {
+          dictionary.at(char(i)) -> at(j)-> next = new std::unordered_map<char, Word_block*> ;
+        }
+      }
+      for (int i = 65; i < 91; i++) {
+        for (int j = 65; j < 91; j++) {
+          for (int k = 65; k < 91; k++) {
+          dictionary.at(char(i)) -> at(j)-> next -> unordered_map::emplace(char(k), new Word_block);
+        }
+      }
+      }
     }
 
   };
@@ -187,20 +199,26 @@ void Word_map::getwords(std::string filename) {
 }
 
 void Word_map::addwords(std::string word){
-  char c,c2;
+  char c,c2,c3;
   std::string record = word;
   std::transform(word.begin(), word.end(), word.begin(), toupper);
   quicksort(word, 0, word.length());
   //std::cout << record << '\n';
   c = word[0];
   c2 = word[1];
-  dictionary.at(c) -> at(c2)->words.push_back(record);
+  c3 = word[2];
+  if (3 < word.length()) {
+    dictionary.at(c) -> at(c2)-> next -> at(c3) -> words.push_back(record);
+  }
+  else{
+    dictionary.at(c) -> at(c2)->words.push_back(record);
+  }
   //std::cout << dictionary.at(c) -> at(c2)->words[0] << '\n';
 
 }
 
 std::string Word_map::searchword(std::string characters) {//16???????
-  char c,c2;
+  char c,c2,c3;
   Word_block* wordblock;
   std::vector<std::string>* v;
   std::string comp;
@@ -211,7 +229,14 @@ std::string Word_map::searchword(std::string characters) {//16???????
 
   c = characters[0];
   c2 = characters[1];
-  v = &(dictionary.at(c) -> at(c2)->words);
+  c3 = characters[2];
+
+  if (3 < characters.length()) {
+    v = &(dictionary.at(c) -> at(c2)-> next -> at(c3) -> words);
+  }
+  else{
+    v = &(dictionary.at(c) -> at(c2)->words);
+  }
   for (int i = 0; i != v->size(); i++) {
     comp = v->at(i);
     std::transform(comp.begin(), comp.end(), comp.begin(), toupper);
