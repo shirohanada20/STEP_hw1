@@ -164,8 +164,8 @@ class Word_map {
     void getwords(std::string filename);
     void addwords(std::string word);
     void setwords(std::string filename);
-    std::vector<std::string> searchword(std::string characters);
-    std::vector<std::string> searchword2(std::string characters);
+    std::string searchword(std::string characters);
+    std::string searchword2(std::string characters);
     void printhighword(std::vector<std::string> v);
     void release();
 
@@ -199,12 +199,13 @@ void Word_map::addwords(std::string word){
 
 }
 
-std::vector<std::string> Word_map::searchword(std::string characters) {//16???????
+std::string Word_map::searchword(std::string characters) {//16???????
   char c,c2;
   Word_block* wordblock;
   std::vector<std::string>* v;
   std::string comp;
   std::vector<std::string> stock;
+  std::string highest = "A";
   std::transform(characters.begin(), characters.end(), characters.begin(), toupper);
   quicksort(characters, 0, characters.length());
 
@@ -216,20 +217,28 @@ std::vector<std::string> Word_map::searchword(std::string characters) {//16?????
     std::transform(comp.begin(), comp.end(), comp.begin(), toupper);
     quicksort(comp, 0, comp.length());
     if (comp == characters) {
-      stock.push_back(v->at(i));
+      if (calcscore(highest) < calcscore(comp)) {
+        highest = v->at(i);
+      }
+      //stock.push_back(v->at(i));
     }
   }
-  return stock;
+  return highest;
 }
-std::vector<std::string> Word_map::searchword2(std::string characters){
+std::string Word_map::searchword2(std::string characters){
   std::vector<std::string> comb;
   std::vector<std::string> record;
+  std::string comp;
+  std::string highest = "A";
   comb = combination(characters);
   for (int i = 0; i != comb.size(); i++) {
-    record = searchword(comb[i]);
+    comp = searchword(comb[i]);
+    if (calcscore(highest) < calcscore(comp)) {
+      highest = comp;
+    }
   }
   std::cout << "finish" << '\n';
-  return record;
+  return highest;
 }
 
 void Word_map::printhighword(std::vector<std::string> v){
@@ -258,7 +267,7 @@ int main() {
   char buf2[512];
   std::string str;
   std::string characters = "abcd";
-  std::vector<std::string> result;
+  std::string result;
   Word_map *wordmap = new Word_map;
   //int c = 'b';
   std::ifstream ifs("mydictionary.txt");
@@ -271,12 +280,13 @@ int main() {
       break;
     }
     result = wordmap->searchword2(characters);
-    if (1 <= result.size()) {
-      std::cout << selecthighword(result) << '\n';
-    }
-    else{
-      std::cout << "none" << '\n';
-    }
+    std::cout << result << '\n';
+    //if (1 <= result.size()) {
+      //std::cout << selecthighword(result) << '\n';
+    //}
+    //else{
+      //std::cout << "none" << '\n';
+    //}
   }
   /*result = combination(characters);
   for (int i = 0; i != result.size(); i++) {
