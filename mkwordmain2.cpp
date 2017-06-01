@@ -27,7 +27,7 @@ public:
 }*/
 };
 
-int Word_block::h = 0; //やばそう
+int Word_block::h = 0; //????
 int Word_block::h2 = 0;
 
 /*Word_block::~Word_block(){
@@ -43,10 +43,10 @@ int Word_block::h2 = 0;
 
 
 void quicksort(std::string& word, int first, int last) {
-  if (last - first <= 1) {//これなんか怪しい
+  if (last - first <= 1) {//????????
     return;
   }
-  int i = first, j = last - 1;//これ注意
+  int i = first, j = last - 1;//????
   for (int pivot = first;; i++, j--) {
     while (word[i] < word[pivot]) {
       i++;
@@ -133,7 +133,7 @@ void Word_map::addwords(std::string word){
 
 }
 
-void Word_map::searchword(std::string characters) {//16文字を受け取る
+void Word_map::searchword(std::string characters) {//16???????
   char c,c2;
   Word_block* wordblock;
   std::vector<std::string>* v;
@@ -214,6 +214,7 @@ int main() {
   /*while (c != 'a') {
     c = std::getchar();
   }*/
+  //modify
   wordmap->release();
   delete wordmap;
   return 0;
