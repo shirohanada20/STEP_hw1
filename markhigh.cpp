@@ -248,15 +248,15 @@ void Word_map::addwords(std::string word){
   c4 = word[3];
   c5 = word[4];
 
-  if (5 < word.length()) {
+  if (4 < word.length()) {
     dictionary.at(c) -> at(c2)-> next -> at(c3) -> next -> at(c4) -> next -> at(c5) -> words.push_back(record);
   }
 
-  else if(4 < word.length()){
+  else if(3 < word.length()){
     dictionary.at(c) -> at(c2)-> next -> at(c3) -> next -> at(c4) -> words.push_back(record);
   }
 
-  else if(3 < word.length()){
+  else if(2 < word.length()){
     dictionary.at(c) -> at(c2)-> next -> at(c3) -> words.push_back(record);
   }
   else{
@@ -305,7 +305,7 @@ std::string Word_map::searchword(std::string characters) {//16???????
         highest = v->at(i);
       }
       else if (calcscore(highest) == calcscore(comp)) {
-        if (highest.length() < comp.length()) {
+        if (highest.length() > comp.length()) {
           highest = v->at(i);
         }
       }
@@ -329,7 +329,7 @@ std::string Word_map::searchword2(std::string characters){
       highest = comp;
     }
     else if (calcscore(highest) == calcscore(comp)) {
-      if (highest.length() < comp.length()) {
+      if (highest.length() > comp.length()) {
         highest = comp;
       }
     }
