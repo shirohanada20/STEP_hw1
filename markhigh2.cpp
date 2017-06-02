@@ -5,12 +5,20 @@
 #include <ios>
 
 class Word_block {
+private:
+  static int h;
+  static int h2;
 public:
   std::vector<std::string> words;
   std::unordered_map<char, Word_block*>* next;
   void release();
-  //~Word_block();
+
 };
+
+int Word_block::h = 0;
+int Word_block::h2 = 0;
+
+
 
 void quicksort(std::string& word, int first, int last) {
   if (last - first <= 1) {
@@ -53,6 +61,7 @@ std::vector<std::string> combination(std::string word){
           }
         }
         record.push_back(comb);
+
       }
     }
   }
@@ -178,40 +187,15 @@ public:
         for (int k = 65; k < 91; k++) {
           for (int l = 65; l < 91; l++) {
             for (int m = 65; m < 91; m++) {
-              dictionary.at(char(i)) -> at(j)-> next -> at(k) -> next -> at(l) -> next -> unordered_map::emplace(char(m), new Word_block);
-            }
-          }
-        }
-      }
-    }
-    for (int i = 65; i < 91; i++) {
-      for (int j = 65; j < 91; j++) {
-        for (int k = 65; k < 91; k++) {
-          for (int l = 65; l < 91; l++) {
-            for (int m = 65; m < 91; m++) {
-              dictionary.at(char(i)) -> at(j)-> next -> at(k) -> next -> at(l) -> next -> at(m) -> next = new std::unordered_map<char, Word_block*>;
-            }
-          }
-        }
-      }
-    }
-
-    for (int i = 65; i < 91; i++) {
-      for (int j = 65; j < 91; j++) {
-        for (int k = 65; k < 91; k++) {
-          for (int l = 65; l < 91; l++) {
-            for (int m = 65; m < 91; m++) {
-              for (int n = 65; n < 91; n++) {
-                dictionary.at(char(i)) -> at(j)-> next -> at(k) -> next -> at(l) -> next -> at(m) -> next -> unordered_map::emplace(char(n), new Word_block);
-            }
+            dictionary.at(char(i)) -> at(j)-> next -> at(k) -> next -> at(l) -> next -> unordered_map::emplace(char(m), new Word_block);
           }
         }
       }
     }
   }
+}
 
 
-  }
 
 };
 
@@ -220,7 +204,7 @@ void Word_map::getwords(std::string filename) {
 }
 
 void Word_map::addwords(std::string word){
-  char c,c2,c3,c4,c5,c6;
+  char c,c2,c3,c4,c5;
   std::string record = word;
   std::transform(word.begin(), word.end(), word.begin(), toupper);
   quicksort(word, 0, word.length());
@@ -230,13 +214,8 @@ void Word_map::addwords(std::string word){
   c3 = word[2];
   c4 = word[3];
   c5 = word[4];
-  c6 = word[5];
 
-  if (5 < word.length()) {
-    dictionary.at(c) -> at(c2)-> next -> at(c3) -> next -> at(c4) -> next -> at(c5) -> next -> at(c6) -> words.push_back(record);
-  }
-
-  else if (4 < word.length()) {
+  if (4 < word.length()) {
     dictionary.at(c) -> at(c2)-> next -> at(c3) -> next -> at(c4) -> next -> at(c5) -> words.push_back(record);
   }
 
@@ -250,11 +229,10 @@ void Word_map::addwords(std::string word){
   else{
     dictionary.at(c) -> at(c2)->words.push_back(record);
   }
-
 }
 
-std::string Word_map::searchword(std::string characters) {
-  char c,c2,c3,c4,c5,c6;
+std::string Word_map::searchword(std::string characters) {//16???????
+  char c,c2,c3,c4,c5;
   Word_block* wordblock;
   std::vector<std::string>* v;
   std::string comp;
@@ -268,13 +246,8 @@ std::string Word_map::searchword(std::string characters) {
   c3 = characters[2];
   c4 = characters[3];
   c5 = characters[4];
-  c6 = characters[5];
 
-  if (5 < characters.length()) {
-    v = &(dictionary.at(c) -> at(c2)-> next -> at(c3) -> next -> at(c4) -> next -> at(c5) -> next -> at(c6) -> words);
-  }
-
-  else if (4 < characters.length()) {
+  if (4 < characters.length()) {
     v = &(dictionary.at(c) -> at(c2)-> next -> at(c3) -> next -> at(c4) -> next -> at(c5) -> words);
   }
 
@@ -328,7 +301,6 @@ std::string Word_map::searchword2(std::string characters){
 
     }
   }
-  std::cout << "finish" << '\n';
   return highest;
 }
 
@@ -352,6 +324,7 @@ int main() {
   std::string characters = "abcd";
   std::string result;
   Word_map *wordmap = new Word_map;
+  //int c = 'b';
   std::ifstream ifs("mydictionary.txt");
   while (ifs.getline(buf, sizeof(str))) {
     wordmap->addwords(buf);
@@ -364,7 +337,7 @@ int main() {
     result = wordmap->searchword2(characters);
     std::cout << result << '\n';
   }
-  wordmap->release();
-  delete wordmap;
-  return 0;
+wordmap->release();
+delete wordmap;
+return 0;
 }
